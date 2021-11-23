@@ -7,7 +7,7 @@ from time import sleep,localtime,strftime
 url=""
 LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
 logging.basicConfig(filename='my.log', level=logging.DEBUG, format=LOG_FORMAT)
-key="3877cb783605f80c687eccadd138873c"
+key=""
 def run(playwright: Playwright,name,passwd) -> None:
     if platform=="linux":
         browser = playwright.chromium.launch(headless=True)
@@ -52,8 +52,9 @@ def run(playwright: Playwright,name,passwd) -> None:
         return False
 def loaddata():
     data=json.load(open('data.json'))
-    global url 
+    global url,key 
     url=data['url']
+    key=data['key']
     return data['data']
     pass
 def report(qq):
