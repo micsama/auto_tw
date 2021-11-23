@@ -54,7 +54,7 @@ def loaddata():
     data=json.load(open('data.json'))
     global url,key 
     url=data['url']
-    key=data['key']
+    key=data['token']
     return data['data']
     pass
 def report(qq):
