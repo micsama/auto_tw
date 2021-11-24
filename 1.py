@@ -58,7 +58,7 @@ def loaddata():
     return data['data']
     pass
 def report(qq):
-    qqurl="https://qmsg.zendee.cn/send/"+key+"/?msg=体温填报失败！请手动填报qq="+qq
+    qqurl="https://qmsg.zendee.cn/send/"+key+"?msg=体温填报失败！请手动填报qq="+qq
     res=requests.get(qqurl)
     pass
 
