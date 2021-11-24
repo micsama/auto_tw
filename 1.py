@@ -13,6 +13,8 @@ def run(playwright: Playwright,name,passwd) -> None:
         browser = playwright.chromium.launch(headless=True)
     elif platform=="darwin":
         browser = playwright.chromium.launch(channel="msedge",headless=True)
+    elif platform=="win32":
+        browser = playwright.chromium.launch(channel="msedge",headless=True)
     else:
         print("系统支持有误，请检查")
         exit(1)
@@ -33,9 +35,16 @@ def run(playwright: Playwright,name,passwd) -> None:
             logging.info("登录失败，可能是密码有误")
             return False
         c= randint(0, 5)
+
+        page.wait_for_timeout(6000)
+        #获取用户名
+        name_path='//html/body/div/div/div/div/div[1]/div[2]/div/form/div[6]/div[1]/div/div[2]/div/div/span'
+        uname=page.text_content(name_path)
+        if uname=="":
+            logging.info("获取姓名失败，可能是网络问题")
         page.fill("input[name=\"tw\"]", "36."+str(c))
 
-        logging.info(name+"开始填报，体温"+"36."+str(c))
+        logging.info(name+uname+"开始填报，体温"+"36."+str(c))
         page.click("button:has-text(\"提交\")")
         sleep(0.5)
         if page.is_visible("text=健康填报成功"):
