@@ -64,7 +64,7 @@ def loaddata():
     #check data
     if Alldata['url']=='':
         raise Exception("url为空！请检查", Alldata['url'])
-    if Alldata['token']==''|Alldata['qq']=='':
+    if (Alldata['token']=='')| (Alldata['qq']=='') :
         print("token为空或者qq为空！将无法报告错误信息")
 def report(qq):
     qqurl="https://qmsg.zendee.cn/send/"+Alldata['key']+"?msg=体温填报失败！请手动填报qq="+qq
