@@ -90,8 +90,8 @@ def func(data):
     pass
 if __name__ == "__main__":
     waittime=randint(0, 1200)
-    sleep(waittime)
     print(f"等待{waittime}秒")
+    sleep(waittime)
     loaddata()
     wait=[10,60,300,600]
     for i in range(4):
