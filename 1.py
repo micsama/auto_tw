@@ -73,13 +73,15 @@ def report(qq):
 
 
 def func(data):
-    i = 0
+    i = 1
     with sync_playwright() as playwright:
         for user in data:
-            print(f"正在处理第{i}个，总共{len(data)}个。")
+            wait_time=randint(0, 300)
+            print(f"正在处理第{i}个，总共{len(data)}个。并等待{wait_time}秒后提交下一个")
             i=i+1
             logging.info(user)
             if run(playwright,user["name"],user["passwd"]):
+                sleep(wait_time)
                 pass
             else:
                 logging.info(user["name"]+"填报失败，半分钟后重试")
@@ -87,6 +89,8 @@ def func(data):
     return 0
     pass
 if __name__ == "__main__":
+    waittime=randint(0, 20)
+    sleep(waittime*60)
     loaddata()
     wait=[10,60,300,600]
     for i in range(4):
