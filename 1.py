@@ -56,7 +56,7 @@ def run( name, passwd) -> None:
             c = randint(0, 5)
             page.wait_for_timeout(6000)
             #获取用户名
-            name_path = '//html/body/div/div/div/div/div[1]/div[2]/div/form/div[6]/div[1]/div/div[2]/div/div/span'
+            name_path = '//*[@id="form"]/div[6]/div[1]/div/div[2]/div/div'
             uname = page.text_content(name_path)
             if uname == "":
                 logging.info("获取姓名失败，可能是网络问题")
