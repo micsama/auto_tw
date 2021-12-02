@@ -55,14 +55,15 @@ def run( name, passwd) -> None:
                 return False
             c = randint(0, 5)
             page.wait_for_timeout(6000)
-            #获取用户名
-            # name_path = '//*[@id="form"]/div[6]/div[1]/div/div[2]/div/div/span'
-            # uname = page.text_content(name_path)
-            # if uname == "":
-            #     logging.info("获取姓名失败，可能是网络问题")
+            page.goto(Alldata["url"])
+            # 获取用户名
+            name_path = '//*[@id="form"]/div[6]/div[1]/div/div[2]/div/div/span'
+            uname = page.text_content(name_path)
+            if uname == "":
+                logging.info("获取姓名失败，可能是网络问题")
             page.fill('//*[@id="form"]/div[18]/div[1]/div/div[2]/div/div/input', "36." + str(c))
 
-            logging.info(name  + "开始填报，体温" + "36." + str(c))
+            logging.info(name  + uname+"开始填报，体温" + "36." + str(c))
             page.click('//*[@id="post"]')
             sleep(0.5)
             if page.is_visible("text=健康填报成功"):
