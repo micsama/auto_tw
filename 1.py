@@ -96,6 +96,7 @@ def report(qq):
 
 
 def func(data):
+    global errorflag
     c=errorflag*60
     print(f"等待{c}秒后继续")
     sleep(c)
