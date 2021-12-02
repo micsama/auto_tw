@@ -110,7 +110,7 @@ def func(data):
         print(f"正在处理第{i}个，总共{len(data)}个。并等待{wait_time}秒后提交下一个")
         i = i + 1
         logging.info(user)
-        if run(playwright, user["name"], user["passwd"]):
+        if run(user["name"], user["passwd"]):
             if len(argv)>1:
                 sleep(wait_time)
             del data[j]
