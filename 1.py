@@ -102,7 +102,8 @@ def func(data):
     c=errorflag*60
     print(f"等待{c}秒后继续")
     sleep(c)
-    if errorflag>=5:
+    if errorflag>=10:
+        report(Alldata['qq'])
         exit(1)
     i = 0
     for j  in range(len(data)):
@@ -114,7 +115,7 @@ def func(data):
             if len(argv)>1:
                 sleep(wait_time)
             i = i + 1
-            del data[j]
+            del data[0]
         else:
             logging.info(user["name"] + "填报失败，半分钟后重试")
             errorflag+=1
