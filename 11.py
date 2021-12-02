@@ -38,6 +38,7 @@ def run(playwright: Playwright, name, passwd) -> None:
         page.fill("[placeholder=\"密码 Password\"]", passwd)
         fillcode(page)
         page.click("text=登 录")
+        sleep(40)
         sleep(1.5)
         if page.is_visible("text=账户不存在。"):
             logging.info("账户名有误")
@@ -97,7 +98,6 @@ def func(data):
             i = i + 1
             logging.info(user)
             if run(playwright, user["name"], user["passwd"]):
-                sleep(wait_time)
                 pass
             else:
                 logging.info(user["name"] + "填报失败，半分钟后重试")
@@ -127,8 +127,6 @@ def getcode(dir):
 
 if __name__ == "__main__":
     waittime = randint(0, 1200)
-    print(f"等待{waittime}秒")
-    sleep(waittime)
     loaddata()
     wait = [10, 60, 300, 600]
     for i in range(4):
