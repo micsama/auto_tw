@@ -4,7 +4,7 @@ from PIL import Image
 from sys import exit
 from random import randint
 import json, logging, requests
-from sys import platform
+from sys import platform,argv
 from time import sleep, localtime, strftime
 
 Alldata = {}
@@ -16,8 +16,11 @@ def fillcode(page):
     s=c.screenshot(path="test.jpg")
     code1=getcode("./test.jpg")
     print(f"获取验证码识别为{code1}")
-    page.fill("//html/body/div[2]/div[1]/div[2]/div/div[1]/div/div/form[1]/div[4]/input", code1)
-    pass
+    page.click("//html/body/div[2]/div[1]/div[2]/div/div[1]/div/div/form[1]/div[4]/input")
+    for i in range(4):
+        sleep(0.2)
+        page.keyboard.press(code1[i])
+    # page.fill("//html/body/div[2]/div[1]/div[2]/div/div[1]/div/div/form[1]/div[4]/input", code1)
 def run(playwright: Playwright, name, passwd) -> None:
     if platform == "linux":
         browser = playwright.chromium.launch(headless=True)
@@ -97,7 +100,8 @@ def func(data):
             i = i + 1
             logging.info(user)
             if run(playwright, user["name"], user["passwd"]):
-                sleep(wait_time)
+                if len(argv)>1:
+                    sleep(wait_time)
                 pass
             else:
                 logging.info(user["name"] + "填报失败，半分钟后重试")
@@ -126,9 +130,10 @@ def getcode(dir):
 
 
 if __name__ == "__main__":
+    if len(argv)>1:
+        print(f"等待{waittime}秒")
+        sleep(waittime)
     waittime = randint(0, 1200)
-    print(f"等待{waittime}秒")
-    sleep(waittime)
     loaddata()
     wait = [10, 60, 300, 600]
     for i in range(4):

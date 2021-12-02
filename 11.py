@@ -6,18 +6,19 @@ from random import randint
 import json, logging, requests
 from sys import platform
 from time import sleep, localtime, strftime
-
 Alldata = {}
 LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
 logging.basicConfig(filename='my.log', level=logging.DEBUG, format=LOG_FORMAT)
-
 def fillcode(page):
     c=page.locator("//html/body/div[2]/div[1]/div[2]/div/div[1]/div/div/form[1]/div[4]/img")
     s=c.screenshot(path="test.jpg")
     code1=getcode("./test.jpg")
     print(f"获取验证码识别为{code1}")
-    page.fill("//html/body/div[2]/div[1]/div[2]/div/div[1]/div/div/form[1]/div[4]/input", code1)
-    pass
+    page.click("//html/body/div[2]/div[1]/div[2]/div/div[1]/div/div/form[1]/div[4]/input")
+    for i in range(4):
+        sleep(0.2)
+        page.keyboard.press(code1[i])
+    # page.fill("//html/body/div[2]/div[1]/div[2]/div/div[1]/div/div/form[1]/div[4]/input", code1)
 def run(playwright: Playwright, name, passwd) -> None:
     if platform == "linux":
         browser = playwright.chromium.launch(headless=True)
@@ -38,23 +39,24 @@ def run(playwright: Playwright, name, passwd) -> None:
         page.fill("[placeholder=\"密码 Password\"]", passwd)
         fillcode(page)
         page.click("text=登 录")
-        sleep(40)
         sleep(1.5)
+        # if page.is_visible("text=验证码。"):
+        #     logging.info("验证码失败")
+        #     return False
         if page.is_visible("text=账户不存在。"):
             logging.info("账户名有误")
             return False
         if page.is_visible("text=登 录"):
-            logging.info("登录失败，可能是密码有误")
+            logging.info("登录失败")
             return False
         c = randint(0, 5)
         page.wait_for_timeout(6000)
         #获取用户名
-        name_path = '//html/body/div/div/div/div/div[1]/div[2]/div/form/div[6]/div[1]/div/div[2]/div/div/span'
+        name_path = '//*[@id="form"]/div[6]/div[1]/div/div[2]/div/div'
         uname = page.text_content(name_path)
         if uname == "":
             logging.info("获取姓名失败，可能是网络问题")
-        page.fill("input[name=\"tw\"]", "36." + str(c))
-
+        page.fill('input[name=\"tw\"]', "36." + str(c))
         logging.info(name + uname + "开始填报，体温" + "36." + str(c))
         page.click("button:has-text(\"提交\")")
         sleep(0.5)
