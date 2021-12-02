@@ -98,6 +98,8 @@ def report(qq):
 
 
 def func(data):
+    if len(data)==0:
+        exit(0)
     global errorflag
     c=errorflag*60
     print(f"等待{c}秒后继续")
@@ -120,6 +122,7 @@ def func(data):
             logging.info(user["name"] + "填报失败，半分钟后重试")
             errorflag+=1
             func(data)
+            break
     return 0
     pass
 
