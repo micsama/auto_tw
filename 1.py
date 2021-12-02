@@ -124,7 +124,7 @@ def getcode(dir):
             table.append(1)
     #通过表格转换成二进制图片，1的作用是白色，0就是黑色
     im = im.point(table, "1")
-    im.show()
+    # im.show()
     im = im.resize((120, 40))
     return pytesseract.image_to_string(im)
 
