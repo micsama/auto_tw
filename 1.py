@@ -97,7 +97,7 @@ def report(qq):
 def func(data):
     i = 1
     with sync_playwright() as playwright:
-        for j  in len(data):
+        for j  in range(len(data)):
             user = data[j]
             wait_time = randint(0, 300)
             print(f"正在处理第{i}个，总共{len(data)}个。并等待{wait_time}秒后提交下一个")
