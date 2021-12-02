@@ -42,7 +42,7 @@ def run( name, passwd) -> None:
             page.fill("[placeholder=\"账号 Username\"]", name)
             page.fill("[placeholder=\"密码 Password\"]", passwd)
             fillcode(page)
-            page.click("text=登 录")
+            page.click('//*[@id="passbutton"]')
             sleep(1.5)
             if page.is_visible("text=验证码信息无效。"):
                 logging.info("验证码识别出错")
@@ -60,10 +60,10 @@ def run( name, passwd) -> None:
             uname = page.text_content(name_path)
             if uname == "":
                 logging.info("获取姓名失败，可能是网络问题")
-            page.fill("input[name=\"tw\"]", "36." + str(c))
+            page.fill('//*[@id="form"]/div[18]/div[1]/div/div[2]/div/div/input', "36." + str(c))
 
             logging.info(name + uname + "开始填报，体温" + "36." + str(c))
-            page.click("button:has-text(\"提交\")")
+            page.click('//*[@id="post"]')
             sleep(0.5)
             if page.is_visible("text=健康填报成功"):
                 page.click("text=确定")
