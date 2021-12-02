@@ -6,7 +6,7 @@ from random import randint
 import json, logging, requests
 from sys import platform,argv
 from time import sleep, localtime, strftime
-
+errorflag=0
 Alldata = {}
 LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
 logging.basicConfig(filename='my.log', level=logging.DEBUG, format=LOG_FORMAT)
@@ -33,6 +33,7 @@ def run(playwright: Playwright, name, passwd) -> None:
         exit(1)
     context = browser.new_context()
     page = context.new_page()
+    page.set_default_timeout(60000)
     try:
         global Alldata
         page.goto(Alldata["url"])
@@ -95,6 +96,11 @@ def report(qq):
 
 
 def func(data):
+    c=errorflag*60
+    print(f"等待{c}秒后继续")
+    sleep(c)
+    if errorflag>=5:
+        exit(1)
     i = 1
     with sync_playwright() as playwright:
         for j  in range(len(data)):
@@ -104,13 +110,13 @@ def func(data):
             i = i + 1
             logging.info(user)
             if run(playwright, user["name"], user["passwd"]):
-                del data[j]
                 if len(argv)>1:
                     sleep(wait_time)
-                pass
+                del data[j]
             else:
                 logging.info(user["name"] + "填报失败，半分钟后重试")
-                return data
+                errorflag+=1
+                func(data)
     return 0
     pass
 
@@ -143,11 +149,4 @@ if __name__ == "__main__":
     data=Alldata['data']
     wait = [10, 60, 120,300, 600]
     data2=func(data)
-    for i in range(5):
-        if len(data2)==0:
-            exit(0)
-        else:
-            data=func(data2)
-            sleep(wait[i])
-    report(Alldata['qq'])
     raise Exception("失败！！！！！")
