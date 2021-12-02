@@ -42,6 +42,9 @@ def run(playwright: Playwright, name, passwd) -> None:
         fillcode(page)
         page.click("text=登 录")
         sleep(1.5)
+        if page.is_visible("text=验证码信息无效。"):
+            logging.info("验证码识别出错")
+            return False
         if page.is_visible("text=账户不存在。"):
             logging.info("账户名有误")
             return False
@@ -94,18 +97,20 @@ def report(qq):
 def func(data):
     i = 1
     with sync_playwright() as playwright:
-        for user in data:
+        for j  in len(data):
+            user = data[j]
             wait_time = randint(0, 300)
             print(f"正在处理第{i}个，总共{len(data)}个。并等待{wait_time}秒后提交下一个")
             i = i + 1
             logging.info(user)
             if run(playwright, user["name"], user["passwd"]):
+                del data[j]
                 if len(argv)>1:
                     sleep(wait_time)
                 pass
             else:
                 logging.info(user["name"] + "填报失败，半分钟后重试")
-                return 1
+                return data
     return 0
     pass
 
@@ -135,11 +140,14 @@ if __name__ == "__main__":
         sleep(waittime)
     waittime = randint(0, 1200)
     loaddata()
-    wait = [10, 60, 300, 600]
-    for i in range(4):
-        if func(Alldata['data']) == 0:
+    data=Alldata['data']
+    wait = [10, 60, 120,300, 600]
+    data2=func(data)
+    for i in range(5):
+        if len(data2)==0:
             exit(0)
         else:
+            data=func(data2)
             sleep(wait[i])
     report(Alldata['qq'])
     raise Exception("失败！！！！！")
