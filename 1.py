@@ -103,16 +103,16 @@ def func(data):
     sleep(c)
     if errorflag>=5:
         exit(1)
-    i = 1
+    i = 0
     for j  in range(len(data)):
-        user = data[j]
+        user = data[0]
         wait_time = randint(0, 300)
         print(f"正在处理第{i}个，总共{len(data)}个。并等待{wait_time}秒后提交下一个")
-        i = i + 1
         logging.info(user)
         if run(user["name"], user["passwd"]):
             if len(argv)>1:
                 sleep(wait_time)
+            i = i + 1
             del data[j]
         else:
             logging.info(user["name"] + "填报失败，半分钟后重试")
