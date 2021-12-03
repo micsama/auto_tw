@@ -6,6 +6,7 @@ from random import randint
 import json, logging, requests
 from sys import platform,argv
 from time import sleep, localtime, strftime
+successflag=0
 errorflag=0
 Alldata = {}
 LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
@@ -68,7 +69,9 @@ def run( name, passwd) -> None:
             sleep(0.5)
             if page.is_visible("text=健康填报成功"):
                 page.click("text=确定")
-                logging.info(name + "成功！")
+                successflag+=1
+                logging.info(name + "成功！",f"已经成功了{successflag}个")
+
                 context.close()
                 browser.close()
                 return True
