@@ -37,7 +37,7 @@ def run( name, passwd) -> None:
         page = context.new_page()
         page.set_default_timeout(60000)
         try:
-            global Alldata
+            global Alldata,successflag
             page.goto(Alldata["url"])
             sleep(0.5)
             page.fill("[placeholder=\"账号 Username\"]", name)
