@@ -70,7 +70,7 @@ def run( name, passwd) -> None:
             if page.is_visible("text=健康填报成功"):
                 page.click("text=确定")
                 successflag+=1
-                logging.info(name + "成功！",f"已经成功了{successflag}个")
+                logging.info(name + "成功！"+f"已经成功了{successflag}个")
 
                 context.close()
                 browser.close()
