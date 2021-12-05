@@ -1,7 +1,6 @@
 
 cmd="./autotw";
 screen_name="autotw"
-start:
+build:
 	git pull
 	gcc ./do.c -o autotw
-	./autotw
