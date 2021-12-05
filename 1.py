@@ -122,6 +122,7 @@ def func(data):
     sleep(c)
     if errorflag >= 10:
         report(Alldata['qq'])
+        sendemail("1246659083@qq.com", False)
         exit(1)
     i = 0
     for j in range(len(data)):
@@ -134,8 +135,8 @@ def func(data):
                 sleep(wait_time)
             i = i + 1
             try:
-                sendemail(user["mail"])
-            except :
+                sendemail(user["mail"], True)
+            except:
                 pass
             del data[0]
         else:
@@ -174,5 +175,4 @@ if __name__ == "__main__":
     loaddata()
     data = Alldata['data']
     wait = [10, 60, 120, 300, 600]
-    data2 = func(data)
-    raise Exception("失败！！！！！")
+    func(data)

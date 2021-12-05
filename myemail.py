@@ -3,17 +3,24 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText  #用于构建邮件内容
 
 
-def sendemail(mail):
-    if mail=="@qq.com":
+def sendemail(mail, status):
+    if mail == "@qq.com":
         return
     smtp_server = "smtp.163.com"  #发信服务器
     asender = "micsamamsg@163.com"  #发件人地址
-    text = '''
-    你好，这里是Mic小助手
-    今日体温填报成功！
-    '''
+    test, asubject = '', ''
+    if status == True:
+        text = '''
+        你好，这里是Mic小助手
+        今日体温填报成功！
+        '''
+        asubject = "填报成功提示！"  #邮件主题
+    elif status == False:
+        text = '''
+        警告！！！今天体温填报失败了
+        '''
+        asubject = "填报失败！！！！"  #邮件主题
     password = "SWRYVTPGWGMXIWQI"
-    asubject = "填报成功提示！"  #邮件主题
     msg = MIMEMultipart()  #邮件设置
     msg["Subject"] = asubject
     msg["to"] = mail
