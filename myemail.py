@@ -3,7 +3,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText  #用于构建邮件内容
 
 
-def sendemail(mail, status):
+async def sendemail(mail, status):
     if mail == "@qq.com":
         return
     smtp_server = "smtp.163.com"  #发信服务器

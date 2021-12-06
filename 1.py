@@ -113,7 +113,7 @@ def report(qq):
     pass
 
 
-def func(data):
+async def func(data):
     if len(data) == 0:
         exit(0)
     global errorflag
@@ -122,7 +122,7 @@ def func(data):
     sleep(c)
     if errorflag >= 15:
         report(Alldata['qq'])
-        sendemail("1246659083@qq.com", False)
+        await sendemail("1246659083@qq.com", False)
         exit(1)
     i = 0
     for j in range(len(data)):
@@ -135,7 +135,7 @@ def func(data):
                 sleep(wait_time)
             i = i + 1
             try:
-                sendemail(user["mail"], True)
+                await sendemail(user["mail"], True)
             except:
                 pass
             del data[0]
