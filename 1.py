@@ -120,7 +120,7 @@ def func(data):
     c = errorflag * 60
     print(f"等待{c}秒后继续")
     sleep(c)
-    if errorflag >= 10:
+    if errorflag >= 15:
         report(Alldata['qq'])
         sendemail("1246659083@qq.com", False)
         exit(1)
