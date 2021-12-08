@@ -1,11 +1,13 @@
 {
     "url": "",
 	"token":"",
+	"qq":"",
+	"mailpasswd":"",
 	"data": [
 		{
 			"name":"",
 			"passwd":"",
-			"qq":""
+			"mail":""
 		}
 	]
 }
