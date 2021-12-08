@@ -116,13 +116,13 @@ def report(qq):
 async def func(data):
     if len(data) == 0:
         exit(0)
-    global errorflag
+    global errorflag,Alldata
     c = errorflag * 60
     print(f"等待{c}秒后继续")
     sleep(c)
     if errorflag >= 15:
         report(Alldata['qq'])
-        await sendemail("1246659083@qq.com", False)
+        await sendemail(Alldata['mailpasswd'],"1246659083@qq.com", False)
         exit(1)
     i = 0
     for j in range(len(data)):
@@ -135,7 +135,7 @@ async def func(data):
                 sleep(wait_time)
             i = i + 1
             try:
-                await sendemail(user["mail"], True)
+                await sendemail(Alldata['mailpasswd'],user["mail"], True)
             except:
                 pass
             del data[0]

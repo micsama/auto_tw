@@ -3,7 +3,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText  #用于构建邮件内容
 
 
-async def sendemail(mail, status):
+async def sendemail(password,mail, status):
     if mail == "@qq.com":
         return
     smtp_server = "smtp.163.com"  #发信服务器
@@ -20,7 +20,6 @@ async def sendemail(mail, status):
         警告！！！今天体温填报失败了
         '''
         asubject = "填报失败！！！！"  #邮件主题
-    password = "SWRYVTPGWGMXIWQI"
     msg = MIMEMultipart()  #邮件设置
     msg["Subject"] = asubject
     msg["to"] = mail
