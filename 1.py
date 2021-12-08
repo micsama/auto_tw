@@ -17,9 +17,9 @@ logging.basicConfig(filename='my.log', level=logging.DEBUG, format=LOG_FORMAT)
 
 def sendemail(passwd ,maild,flag):#调用go的mail
     if flag:
-        system(f"./mail {maild} '你好，这里是Mic小助手 今日体温填报成功！' {passwd}")
+        system(f"./mail {maild} {passwd} '你好，这里是Mic小助手 今日体温填报成功！'")
     else:
-        system(f"./mail {maild} '警告！！！今天体温填报失败了' {passwd}")
+        system(f"./mail {maild} {passwd} '警告！！！今天体温填报失败了'")
 
 def fillcode(page):
     c = page.locator(
