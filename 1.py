@@ -7,6 +7,7 @@ import json, logging, requests
 from sys import platform, argv
 from time import sleep, localtime, strftime
 from os import system
+import time
 # from myemail import sendemail
 
 successflag = 0
@@ -15,11 +16,14 @@ Alldata = {}
 LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
 logging.basicConfig(filename='my.log', level=logging.DEBUG, format=LOG_FORMAT)
 
-def sendemail(passwd ,maild,flag):#调用go的mail
+def sendemail(passwd ,maild,name,flag):#调用go的mail
+    now_time=time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
+    if maild == '@qq.com':
+        return
     if flag:
-        system(f"./mail {maild} {passwd} '你好，这里是Mic小助手 今日体温填报成功！'")
+        system(f"./mail {maild} {passwd} '{name}你好，这里是Mic小助手 今日体温填报成功！{now_time}'")
     else:
-        system(f"./mail {maild} {passwd} '警告！！！今天体温填报失败了'")
+        system(f"./mail {maild} {passwd} '{name}警告！！！今天体温填报失败了！{now_time}'")
 
 def fillcode(page):
     c = page.locator(
@@ -128,7 +132,7 @@ def func(data):
     sleep(c)
     if errorflag >= 15:
         report(Alldata['qq'])
-        sendemail(Alldata['mailpasswd'],"1246659083@qq.com", False)
+        sendemail(Alldata['mailpasswd'],"1246659083@qq.com","xxing ji", False)
         exit(1)
     i = 0
     for j in range(len(data)):
@@ -141,7 +145,7 @@ def func(data):
                 sleep(wait_time)
             i = i + 1
             try:
-                sendemail(Alldata['mailpasswd'],user["mail"], True)
+                sendemail(Alldata['mailpasswd'],user["mail"], user["name"],True)
             except:
                 pass
             del data[0]
