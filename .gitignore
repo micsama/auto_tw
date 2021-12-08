@@ -1,7 +1,6 @@
 do
 autotw
 my.log
-
 .DS_Store
 .sync.sh
 data.json
@@ -16,5 +15,5 @@ test.jpg
 未命名.ipynb
 data11.json
 data22.json
-deploy
 mail
+deploy
