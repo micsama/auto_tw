@@ -21,9 +21,9 @@ def sendemail(passwd ,maild,name,flag):#调用go的mail
     if maild == '@qq.com':
         return
     if flag:
-        system(f"./mail {maild} {passwd} '{name}你好，这里是Mic小助手 今日体温填报成功！{now_time}'")
+        system(f"./mail {maild}  ' Msg小助手提示' '{name}你好，这里是Mic小助手 今日体温填报成功！{now_time} {passwd}'")
     else:
-        system(f"./mail {maild} {passwd} '{name}警告！！！今天体温填报失败了！{now_time}'")
+        system(f"./mail {maild} ' Msg小助手警告！' '{name}警告！！！今天体温填报失败了！{now_time} {passwd}'")
 
 def fillcode(page):
     c = page.locator(
