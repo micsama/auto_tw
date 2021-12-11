@@ -178,11 +178,16 @@ def getcode(dir):
 
 if __name__ == "__main__":
     for i in range(60):
-        errorflag[i]=0
+        errorflag[str(i)]=0
     if len(argv) > 1:
         print(f"等待{waittime}秒")
         sleep(waittime)
     waittime = randint(0, 1200)
     loaddata()
     data = Alldata['data']
+
+    log=' "test") \log=2 '
+    print(log)
+
+
     func(data)
