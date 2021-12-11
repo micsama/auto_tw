@@ -55,7 +55,7 @@ def run(name, passwd) -> None:
             exit(1)
         context = browser.new_context()
         page = context.new_page()
-        page.set_default_timeout(60000)
+        page.set_default_timeout(100000)
         try:
             global Alldata, successflag
             page.goto(Alldata["url"])
@@ -127,6 +127,7 @@ def func(data):
         exit(0)
     global errorflag,Alldata,i
     # c = errorflag * 60
+    c=60
     print(f"等待{c}秒后继续")
     sleep(c)
     if errorflag[i] >= 9:
