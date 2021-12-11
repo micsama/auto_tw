@@ -177,7 +177,6 @@ def getcode(dir):
 
 
 if __name__ == "__main__":
-    global errorflag
     for i in range(60):
         errorflag[i]=0
     if len(argv) > 1:
