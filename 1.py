@@ -8,10 +8,9 @@ from sys import platform, argv
 from time import sleep, localtime, strftime
 from os import system
 import time
-# from myemail import sendemail
-
+i=0
 successflag = 0
-errorflag = 0
+errorflag = {}
 Alldata = {}
 LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
 logging.basicConfig(filename='my.log', level=logging.DEBUG, format=LOG_FORMAT)
@@ -126,15 +125,14 @@ def report(qq):
 def func(data):
     if len(data) == 0:
         exit(0)
-    global errorflag,Alldata
-    c = errorflag * 60
+    global errorflag,Alldata,i
+    # c = errorflag * 60
     print(f"等待{c}秒后继续")
     sleep(c)
-    if errorflag >= 15:
+    if errorflag[i] >= 9:
         report(Alldata['qq'])
         sendemail(Alldata['mailpasswd'],"1246659083@qq.com","xxing ji", False)
         exit(1)
-    i = 0
     for j in range(len(data)):
         user = data[0]
         wait_time = randint(0, 300)
@@ -151,7 +149,7 @@ def func(data):
             del data[0]
         else:
             logging.info(user["name"] + "填报失败，半分钟后重试")
-            errorflag += 1
+            errorflag[i] += 1
             func(data)
             break
     return 0
@@ -184,5 +182,4 @@ if __name__ == "__main__":
     waittime = randint(0, 1200)
     loaddata()
     data = Alldata['data']
-    wait = [10, 60, 120, 300, 600]
     func(data)
