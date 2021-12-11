@@ -130,7 +130,7 @@ def func(data):
     c=60
     print(f"等待{c}秒后继续")
     sleep(c)
-    if errorflag[i] >= 9:
+    if errorflag[str(i)] >= 9:
         report(Alldata['qq'])
         sendemail(Alldata['mailpasswd'],"1246659083@qq.com","xxing ji", False)
         exit(1)
@@ -150,7 +150,7 @@ def func(data):
             del data[0]
         else:
             logging.info(user["name"] + "填报失败，半分钟后重试")
-            errorflag[i] += 1
+            errorflag[str(i)] += 1
             func(data)
             break
     return 0
