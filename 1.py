@@ -177,8 +177,8 @@ def getcode(dir):
 
 
 if __name__ == "__main__":
-    for i in range(60):
-        errorflag[str(i)]=0
+    for j in range(60):
+        errorflag[str(j)]=0
     if len(argv) > 1:
         print(f"等待{waittime}秒")
         sleep(waittime)
