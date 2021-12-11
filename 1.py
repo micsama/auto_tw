@@ -128,7 +128,7 @@ def func(data):
     # c = errorflag * 60
     c=60
     print(f"等待{c}秒后继续")
-    sleep(c)
+    # sleep(c)
     if errorflag[str(i)] >= 9:
         report(Alldata['qq'])
         sendemail(Alldata['mailpasswd'],"1246659083@qq.com","xxing ji", False)
@@ -180,7 +180,7 @@ if __name__ == "__main__":
         errorflag[str(j)]=0
     if len(argv) > 1:
         print(f"等待{waittime}秒")
-        sleep(waittime)
+        # sleep(waittime)
     waittime = randint(0, 1200)
     loaddata()
     data = Alldata['data']
