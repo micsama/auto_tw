@@ -27,7 +27,7 @@ void run(float c) {
 }
 
 int main(int argc, char *argv[]) {
-	if(arg!=1){
+	if(argc!=1){
 		flag=1;
 	}
     time_t timep;
