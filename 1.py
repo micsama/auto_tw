@@ -8,21 +8,29 @@ from sys import platform, argv
 from time import sleep, localtime, strftime
 from os import system
 import time
-i=0
+
+i = 0
 successflag = 0
 errorflag = {}
 Alldata = {}
+datadict={}
 LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
 logging.basicConfig(filename='my.log', level=logging.DEBUG, format=LOG_FORMAT)
 
-def sendemail(passwd ,maild,name,flag):#调用go的mail
-    now_time=time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
+
+def sendemail(passwd, maild, name, flag):  #调用go的mail
+    now_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
     if maild == '@qq.com':
         return
     if flag:
-        system(f"./mail {maild}  ' Msg小助手提示' '{name}你好，这里是Mic小助手 今日体温填报成功！{now_time}' {passwd}")
+        system(
+            f"./mail {maild}  ' Msg小助手提示' '{name}你好，这里是Mic小助手 今日体温填报成功！{now_time}' {passwd}"
+        )
     else:
-        system(f"./mail {maild} ' Msg小助手警告！' '{name}警告！！！今天体温填报失败了！{now_time}' {passwd}")
+        system(
+            f"./mail {maild} ' Msg小助手警告！' '{name}警告！！！今天体温填报失败了！{now_time}' {passwd}"
+        )
+
 
 def fillcode(page):
     c = page.locator(
@@ -116,7 +124,8 @@ def loaddata():
 
 
 def report(qq):
-    qqurl = "https://qmsg.zendee.cn/send/" + Alldata['token'] + "?msg=体温填报失败！请手动填报qq=" + qq
+    qqurl = "https://qmsg.zendee.cn/send/" + Alldata[
+        'token'] + "?msg=体温填报失败！请手动填报qq=" + qq
     res = requests.get(qqurl)
     pass
 
@@ -124,18 +133,19 @@ def report(qq):
 def func(data):
     if len(data) == 0:
         exit(0)
-    global errorflag,Alldata,i
+    global errorflag, Alldata, i
     # c = errorflag * 60
-    c=60
+    c = 60
     print(f"等待{c}秒后继续")
     # sleep(c)
     if errorflag[str(i)] >= 9:
         report(Alldata['qq'])
-        sendemail(Alldata['mailpasswd'],"1246659083@qq.com","xxing ji", False)
+        sendemail(Alldata['mailpasswd'], "1246659083@qq.com", "xxing ji",
+                  False)
         exit(1)
     for j in range(len(data)):
         user = data[0]
-        wait_time = randint(0, 300)
+        wait_time = randint(60, 500)
         print(f"正在处理第{i}个，总共{len(data)}个。并等待{wait_time}秒后提交下一个")
         logging.info(user)
         if run(user["name"], user["passwd"]):
@@ -143,7 +153,8 @@ def func(data):
                 sleep(wait_time)
             i = i + 1
             try:
-                sendemail(Alldata['mailpasswd'],user["mail"], user["name"],True)
+                sendemail(Alldata['mailpasswd'], user["mail"], user["name"],
+                          True)
             except:
                 pass
             del data[0]
@@ -177,16 +188,11 @@ def getcode(dir):
 
 if __name__ == "__main__":
     for j in range(60):
-        errorflag[str(j)]=0
+        errorflag[str(j)] = 0
+    waittime = randint(0, 1200)
     if len(argv) > 1:
         print(f"等待{waittime}秒")
-        # sleep(waittime)
-    waittime = randint(0, 1200)
+        sleep(waittime)
     loaddata()
     data = Alldata['data']
-
-    log=' "test") \log=2 '
-    print(log)
-
-
     func(data)
