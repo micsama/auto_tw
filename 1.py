@@ -189,7 +189,7 @@ def getcode(dir):
 if __name__ == "__main__":
     for j in range(60):
         errorflag[str(j)] = 0
-    waittime = randint(0, 1200)
+    waittime = randint(0, 180)
     if len(argv) > 1:
         print(f"等待{waittime}秒")
         sleep(waittime)
