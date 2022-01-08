@@ -24,16 +24,17 @@ def sendemail(passwd, maild, name, flag):  #调用go的mail
         return
     if flag:
         system(
-            f"./mail {maild}  ' Msg小助手提示' '{name}你好，这里是Mic小助手 今日体温填报成功！{now_time}' {passwd}"
+            f"./mail-go/mail {maild}  ' Msg小助手提示' '{name}你好，这里是Mic小助手 今日体温填报成功！{now_time}' {passwd}"
         )
     else:
         system(
-            f"./mail {maild} ' Msg小助手警告！' '{name}警告！！！今天体温填报失败了！{now_time}' {passwd}"
+            f"./mail-go/mail {maild} ' Msg小助手警告！' '{name}警告！！！今天体温填报失败了！{now_time}' {passwd}"
         )
 
 
 def fillcode(page):
     c = page.locator(
+        # '//*[@id="fm1"]/div[4]/img'
         "//html/body/div[2]/div[1]/div[2]/div/div[1]/div/div/form[1]/div[4]/img"
     )
     s = c.screenshot(path="test.jpg")
@@ -54,7 +55,7 @@ def run(name, passwd) -> None:
             browser = playwright.chromium.launch(headless=True)
         elif platform == "darwin":
             browser = playwright.chromium.launch(channel="msedge",
-                                                 headless=False)
+                                                 headless=True)
         elif platform == "win32":
             browser = playwright.chromium.launch(channel="msedge",
                                                  headless=True)
@@ -68,8 +69,8 @@ def run(name, passwd) -> None:
             global Alldata, successflag
             page.goto(Alldata["url"])
             sleep(0.5)
-            page.fill("[placeholder=\"账号 Username\"]", name)
-            page.fill("[placeholder=\"密码 Password\"]", passwd)
+            page.fill("[id=username]", name)
+            page.fill("[id=password]", passwd)
             fillcode(page)
             page.click('//*[@id="passbutton"]')
             sleep(1.5)
