@@ -55,7 +55,7 @@ def run(name, passwd) -> None:
             browser = playwright.chromium.launch(headless=True)
         elif platform == "darwin":
             browser = playwright.chromium.launch(channel="msedge",
-                                                 headless=True)
+                                                 headless=False)
         elif platform == "win32":
             browser = playwright.chromium.launch(channel="msedge",
                                                  headless=True)
