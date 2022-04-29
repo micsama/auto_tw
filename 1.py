@@ -84,7 +84,7 @@ def run(name, passwd) -> None:
                 logging.info("登录失败，可能是密码有误")
                 return False
             c = randint(0, 5)
-            page.wait_for_timeout(6000)
+            page.wait_for_timeout(3000)
             page.goto(Alldata["url"])
             # 获取用户名
             name_path = '//*[@id="form"]/div[6]/div[1]/div/div[2]/div/div/span'
@@ -97,7 +97,8 @@ def run(name, passwd) -> None:
 
             logging.info(name + uname + "开始填报，体温" + "36." + str(c))
             page.click('//*[@id="post"]')
-            sleep(0.5)
+            sleep(20)
+            #等待添加图形验证码部分
             if page.is_visible("text=健康填报成功"):
                 page.click("text=确定")
                 successflag += 1
